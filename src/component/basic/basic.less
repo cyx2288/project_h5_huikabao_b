@@ -1,0 +1,112 @@
+html,body {
+  /*height: 100%;*/
+  user-select: none;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  line-height: 1.6;
+  background-color: #f5f5f9;
+  color: #4a4a4a;
+  font-size: 14px;
+  font-family: Arial,'微软雅黑',Helvetica Neue,Helvetica,sans-serif;
+  overflow-scrolling: touch;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a img {
+  border: 0;
+}
+
+a {
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+}
+
+@font-face {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  font-family: Arial,'微软雅黑',Helvetica Neue,Helvetica,sans-serif;
+}
+
+input,button,textarea{
+
+  background: none;
+  outline: none;
+  border: 0;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &:active{
+
+    opacity: .6;
+
+  }
+
+}
+
+/*
+yao_alignment_center  垂直居中 水平两端对齐
+
+yao_alignment_top  垂直顶部 水平两端对齐
+
+yao_alignment_bottom 垂直底部 水平两端对齐
+
+yao_alignment_left 垂直顶部 水平左对齐
+
+yao_alignment_right 垂直顶部 水平右对齐
+
+yao_alignment_middle 垂直居中 水平左对齐
+
+yao_center_center 垂直居中 水平居中
+
+*/
+.jdshow_center_center,.yao_alignment_center,.yao_alignment_top,.yao_alignment_bottom,.yao_alignment_left,.yao_alignment_middle,.yao_center_center,.yao_alignment_right{/*盒子声明*/
+  display: flex;
+}
+
+.yao_alignment_center,.yao_alignment_top,.yao_alignment_bottom{/*水平两端对齐*/
+  justify-content: space-between;
+}
+
+.yao_alignment_left,.yao_alignment_middle{ /*水平左对齐*/
+  justify-content: flex-start;
+}
+
+.jdshow_center_center{/*水平居中*/
+  justify-content: center;
+}
+.yao_alignment_right{/*水平右对齐*/
+  justify-content: flex-end;
+}
+
+.yao_alignment_center,.yao_alignment_middle,.yao_center_center,.yao_alignment_right,.jdshow_center_center{  /*垂直居中*/
+  align-items: center;
+}
+
+.yao_alignment_top,.yao_alignment_left{ /*垂直顶部*/
+  align-items: flex-start;
+}
+
+.yao_alignment_bottom{ /*垂直底部*/
+  align-items: flex-end;
+}
+.yao_alignment_right{
+  justify-content: flex-end;
+}
+
+.yao_shadow{   /*每个模块的阴影*/
+  box-shadow: 0 2px 3px #E9E9E9; ;
+}
+
+.ovfHiden {
+  overflow: hidden;
+  height: 100%;
+}
+

@@ -37,6 +37,11 @@ var devImg = require('./gulp/dev/img.dev.js');
 
 gulp.task('imageMinDev',devImg);
 
+//视频 开发
+var devAudio = require('./gulp/dev/audio.dev.js');
+
+gulp.task('devAudio',devAudio);
+
 
 //监听文件变化
 gulp.task('devWatch',function () {
@@ -56,7 +61,7 @@ gulp.task('devWatch',function () {
 });
 
 //开发环境
-gulp.task('myServer',['devWatch','connect','imageMinDev','changeLessDev','changeJsDev','fileIncludeDev']);
+gulp.task('myServer',['devWatch','connect','imageMinDev','changeLessDev','changeJsDev','fileIncludeDev','devAudio']);
 
 
 //js压缩 交付
@@ -81,13 +86,18 @@ var distClean = require('./gulp/dis/clean.dist');
 
 gulp.task('distClean', distClean);
 
+//视频
+var distAudio = require('./gulp/dis/audio.dist.js');
+
+gulp.task('distAudio',distAudio);
+
 //html
 var distHtml = require('./gulp/dis/html.dist.js');
 
 gulp.task('distHtml', distHtml);
 
-gulp.task('.dist', ['imageMinDev', 'changeLessDev', 'changeJsDev', 'fileIncludeDev','distClean'],function () {
+gulp.task('.dist', [ 'changeLessDev', 'changeJsDev', 'fileIncludeDev','distClean'],function () {
 
-    gulp.start('distJs', 'distCss', 'distImg', 'distHtml')
+    gulp.start('imageMinDev','distJs', 'distCss', 'distImg', 'distHtml','distAudio')
 
 });
