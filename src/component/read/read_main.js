@@ -2,7 +2,7 @@ var reciteNum = {
 
     run: function (num) {
 
-        num = (num*1).toString();//字符串
+        num = (num * 1).toString();//字符串
 
         var thisLength = num.length;
 
@@ -29,13 +29,13 @@ var reciteNum = {
 
             (function () {
 
-                if(thisN=='.'){//点变成音频
+                if (thisN == '.') {//点变成音频
 
                     reciteList.push('DIAN');
 
                 }
 
-                else{//数字返回数
+                else {//数字返回数
 
                     reciteList.push(thisN);
 
@@ -47,7 +47,7 @@ var reciteNum = {
 
             (function () {//分位变换
 
-                if(thisN!=0) {
+                if (thisN != 0) {
 
                     if (thisNumPosition != 0 && thisNumPosition % 4 == 0) {
 
@@ -91,19 +91,19 @@ var reciteNum = {
 
         reciteList.push('YUAN');//含重复零的数组
 
-        var activeList=[];//去零
+        var activeList = [];//去零
 
-        var iNewList=0;//新数组计数
+        var iNewList = 0;//新数组计数
 
 
         //去零，整理不需要的报数
         (function () {
 
-            for(var i=0;i<reciteList.length;i++){
+            for (var i = 0; i < reciteList.length; i++) {
 
-                if(i != reciteList.length) {//最后一位没有比对需求
+                if (i != reciteList.length) {//最后一位没有比对需求
 
-                    var nextNum=reciteList[i + 1];
+                    var nextNum = reciteList[i + 1];
 
                     if (
 
@@ -144,88 +144,92 @@ var reciteNum = {
 
             /*如果只有元的时候，前面加一个零*/
 
-            if(activeList.length==1&&activeList[0]=='YUAN'){
+            if (activeList.length == 1 && activeList[0] == 'YUAN') {
 
                 activeList.unshift('0')
 
             }
 
-
         })();
 
         this.l.push(activeList);//保存播报的列表，全局变量
 
+        var thisAudioPosition = 1;//播报单个字位置
 
+        var duringTime;//每个音频播放时间
 
-        /*音频绑定事件*/
-        if(this.o){
+        var p;//播放对象
 
-            var thisAudioPosition=1;//播报单个字位置
+        var totalTime = 0;//依次应该延迟时间
 
-            var allEle=document.getElementById('all_audio').getElementsByTagName('audio');//所有音频文件
-
-            for(var i=0;i<allEle.length;i++)
-
-            {
-
-                allEle[i].addEventListener('ended',function () {//所有音频加结束监听
-
-                    if(thisAudioPosition<this.l[0].length) {//队列不到底才播报
-
-                        //document.getElementById('all_audio_' + this.l[0][thisAudioPosition++]).play();//播报队列此时的音频
-                        audioPlay(thisAudioPosition++);
-
-                    }
-
-                    else{//队列到底就停止播报
-
-                        thisAudioPosition=1;//播报位置初始化
-
-                        this.l.shift();/*删除第一个播报队列*/
-
-                        if(this.l.length>0){//如果此时播报队列里有
-
-                            audioPlay(0);//继续播报
-
-                        }
-
-                        else{
-
-                            this.b=1;//打开播报开关
-
-                        }
-
-
-                    }
-
-                }.bind(this),false)
-
-            }
-
-            this.o=0;//自锁
-
-        }
-
-        function audioPlay(num) {//自动播放方法
-
-            document.getElementById('all_audio_' + reciteNum.l[0][num]).play();
-
-        }
-
-        if(this.b){
+        if (this.b) {
 
             audioPlay(0);//自动播放第一个
 
-            this.b=0;
+            PlayGoOn();
+
+            this.b = 0;
+        }
+
+
+            function PlayGoOn() {
+
+                setTimeout(function () {
+
+                    duringTime = p.getDuration();//获取播放时长
+
+                    console.log(duringTime*1000-100);
+
+                    setTimeout(function () {
+
+                        if(thisAudioPosition < reciteNum.l[0].length){//队列不到底
+
+                            audioPlay(thisAudioPosition++);
+
+                            PlayGoOn()
+
+                        }else {
+
+                            thisAudioPosition = 1;//播报位置初始化
+
+                            reciteNum.l.shift();//删除第一个
+
+                            if (reciteNum.l.length > 0) {//如果此时播报队列里有
+
+                                audioPlay(0);//继续播报第一个音频
+
+                                PlayGoOn();//播放剩下的音频
+                            }
+                            else {
+
+                                reciteNum.b = 1;//打开播报开关
+                            }
+
+                        }
+
+                    },duringTime*1000-100);
+
+                }, 100);
+        }
+
+
+        function audioPlay(num) {//自动播放方法
+
+            var url = document.getElementById('all_audio_' + reciteNum.l[0][num]).getElementsByTagName('source')[0].getAttribute('data-src');
+
+            p = plus.audio.createPlayer('file://' + url);
+
+            p.play();
 
         }
-        
+
+
     },
 
-    o:1,//自锁变量，加监听
+    o: 1,//自锁变量，加监听
 
-    l:[],/*所有的播报列表*/
+    l: [], /*所有的播报列表*/
 
-    b:1/*是否在播报中的开关，开是可以播报（没有播报中），关是不可播报（播报中）*/
+    b: 1/*是否在播报中的开关，开是可以播报（没有播报中），关是不可播报（播报中）*/
 
 };

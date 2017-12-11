@@ -1,87 +1,127 @@
-<input id="xx" style="font-size: 20px;border: 2px #000 solid"/>
+<input id="xx" style="font-size: 20px;border: 2px #000 solid;width: 80%;height: 40px;margin: 30px auto;display:block;text-align: center"/>
 
-<button onclick="reciteNum.run(document.getElementById('xx').value)">展示</button>
-
-
-
-
-
-
-
-
-
-
+<button onclick="reciteNum.run(document.getElementById('xx').value)"  style="font-size: 20px;display: block;margin:30px auto;border: solid 1px #dddddd;padding: 10px 30px"/>展示</button>
 
 
 
 <div id="all_audio">
 
     <audio id="all_audio_0">
-        <source src="../../audio/0.mp3" type="audio/mpeg">
+        <source src="0.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_1">
-        <source src="../../audio/1.mp3" type="audio/mpeg">
+        <source src="1.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_2">
-        <source src="../../audio/2.mp3" type="audio/mpeg">
+        <source src="2.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_3">
-        <source src="../../audio/3.mp3" type="audio/mpeg">
+        <source src="3.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_4">
-        <source src="../../audio/4.mp3" type="audio/mpeg">
+        <source src="4.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_5">
-        <source src="../../audio/5.mp3" type="audio/mpeg">
+        <source src="5.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_6">
-        <source src="../../audio/6.mp3" type="audio/mpeg">
+        <source src="6.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_7">
-        <source src="../../audio/7.mp3" type="audio/mpeg">
+        <source src="7.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_8">
-        <source src="../../audio/8.mp3" type="audio/mpeg">
+        <source src="8.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_9">
-        <source src="../../audio/9.mp3" type="audio/mpeg">
+        <source src="9.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_DIAN">
-        <source src="../../audio/DIAN.mp3" type="audio/mpeg">
+        <source src="DIAN.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_SHI">
-        <source src="../../audio/SHI.mp3" type="audio/mpeg">
+        <source src="SHI.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_BAI">
-        <source src="../../audio/BAI.mp3" type="audio/mpeg">
+        <source src="BAI.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_QIAN">
-        <source src="../../audio/QIAN.mp3" type="audio/mpeg">
+        <source src="QIAN.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_WAN">
-        <source src="../../audio/WAN.mp3" type="audio/mpeg">
+        <source src="WAN.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_YYI">
-        <source src="../../audio/YYI.mp3" type="audio/mpeg">
+        <source src="YYI.mp3" type="audio/mpeg">
     </audio>
 
     <audio id="all_audio_YUAN">
-        <source src="../../audio/YUAN.mp3" type="audio/mpeg">
+        <source src="YUAN.mp3" type="audio/mpeg">
     </audio>
 
 </div>
+
+<script>
+
+    if(window.plus){
+
+        onPlusReady();
+
+    }
+
+    else{
+
+        document.addEventListener('plusready', onPlusReady, false);
+
+    }
+
+    function onPlusReady() {
+
+        var thisPath;
+
+        plus.io.resolveLocalFileSystemURL('_www/audio', function (entry) {//找到文件
+
+           // console.log('获取成功');
+
+            var url = "_www/audio";
+
+            var thisPath = plus.io.convertLocalFileSystemURL(url);//转换成绝对路径
+
+            var allAudio = document.getElementById('all_audio').getElementsByTagName('source');
+
+            for (var i = 0; i < allAudio.length; i++) {
+
+                var thisSrc=allAudio[i].getAttribute('src');
+
+                var thisTrueSrc=thisPath+'/'+thisSrc;
+
+                allAudio[i].setAttribute('data-src',thisTrueSrc)
+
+
+            }
+        },function () {
+
+            console.log('获取失败');
+
+        });
+
+    }
+
+
+
+</script>

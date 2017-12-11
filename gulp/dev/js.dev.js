@@ -12,6 +12,8 @@ var gulp = require('gulp'),
 
     concat = require("gulp-concat"),//文件合并
 
+     babel = require("gulp-babel"),//转码
+
     rename = require("gulp-rename");//重命名
 
 function devJs(){
@@ -19,6 +21,7 @@ function devJs(){
     //主要依赖模块
     gulp.src(['src/js/*.js',  'src/component/**/*.js'])
 
+        .pipe(babel())
         .pipe(concat('ak_medicine.js'))//合并
 
         .pipe(gulp.dest('build/js'))//在bulid/js下生成文件
